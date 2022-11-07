@@ -10,13 +10,18 @@ module.exports = {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
+  devServer: {
+    static: "./dist"
+  },
   plugins:[
+      // To preserve index.html template with entry(chunk) 'index: "./src/index.js"' injected and bundle into file with filename: "index.html"
       new htmlWebpackPlugin({
         template: path.resolve(__dirname, "src/index.html"),
         chunks: ["index"],
         inject: true,
         filename: "index.html"
       }),
+    // To preserve products.html template with entry(chunk) 'product: "./src/products.js"' injected and bundle into file with filename: "products.html"
       new htmlWebpackPlugin({
         template: path.resolve(__dirname, "src/products.html"),
         chunks: ["product"],

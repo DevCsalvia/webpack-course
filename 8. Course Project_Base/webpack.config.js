@@ -63,6 +63,12 @@ module.exports = {
                 }
             ]
         }),
-        new BundleAnalyzerPlugin({})
-    ]
+        // new BundleAnalyzerPlugin({})
+    ],
+    // Shared packages move to one chunk and loaded separately then caching of browsers do not reload them
+    optimization: {
+        splitChunks: {
+            chunks: "all"
+        }
+    }
 }

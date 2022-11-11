@@ -1,6 +1,7 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer")
 
 module.exports = {
     entry: {
@@ -61,6 +62,7 @@ module.exports = {
                     context: "src"
                 }
             ]
-        })
+        }),
+        new BundleAnalyzerPlugin({})
     ]
 }

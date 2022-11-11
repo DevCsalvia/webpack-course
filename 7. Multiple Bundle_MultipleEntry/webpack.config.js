@@ -6,6 +6,7 @@ module.exports = {
     index: "./src/index.js",
     product: "./src/products.js",
   },
+  // To make bundles for each entry with different filename we should place [name] (name = "entry key")
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),

@@ -1,9 +1,15 @@
 const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const webpack = require("webpack");
+const {PurgeCSSPlugin} = require("purgecss-webpack-plugin")
+const glob = require("glob")
+
+const purgePath = {
+  src: path.join(__dirname, "src")
+}
 
 module.exports = {
   entry: {
@@ -47,14 +53,14 @@ module.exports = {
   },
   plugins:[
     // To preserve index.html template with entry(chunk) 'index: "./src/index.js"' injected and bundle into file with filename: "index.html"
-    new htmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "src/index.html"),
       chunks: ["index"],
       inject: true,
       filename: "index.html"
     }),
     // To preserve courses.html template with entry(chunk) 'courses: "./src/pages/courses.js"' injected and bundle into file with filename: "courses.html"
-    new htmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "src/pages/courses.html"),
       chunks: ["courses"],
       inject: true,
@@ -68,6 +74,11 @@ module.exports = {
           context: "src"
         }
       ]
+    }),
+    // Remove unused CSS code
+    new PurgeCSSPlugin({
+      paths: glob.sync(`${purgePath.src}/**/*`, {nodir: true}),
+      safelist: ["dummy-css"]
     }),
     // new BundleAnalyzerPlugin({}),
     // For MiniCssExtractPlugin to work should be provided as plugin

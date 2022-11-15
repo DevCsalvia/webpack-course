@@ -3,6 +3,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const webpack = require("webpack");
 
 module.exports = {
   entry: {
@@ -69,7 +70,13 @@ module.exports = {
       ]
     }),
     // new BundleAnalyzerPlugin({}),
-      new MiniCssExtractPlugin({})
+    // For MiniCssExtractPlugin to work should be provided as plugin
+    new MiniCssExtractPlugin({}),
+    // Automatically load modules instead of having to import or require them everywhere.
+    new webpack.ProvidePlugin({
+      mnt: "moment",
+      $: "jquery"
+    })
   ],
   // Shared packages move to one chunk and loaded separately then caching of browsers do not reload them
   optimization: {

@@ -11,7 +11,9 @@ module.exports = {
         path: path.resolve(__dirname, "dist")
     },
     plugins: [
-        new ESLintPlugin(),
+        new ESLintPlugin({
+            fix: true
+        }),
         new HtmlWebpackPlugin({
             template: "./src/index.html",
             filename: "index.html"
@@ -45,11 +47,6 @@ module.exports = {
                           ],
                           "@babel/preset-react",
                       ]
-                  }
-              }, {
-                  loader: "eslint-loader",
-                  options: {
-                      fix: true
                   }
               }]
             },

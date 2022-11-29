@@ -1,31 +1,38 @@
 import React, {Suspense} from "react";
 import "./App.scss";
-import { Switch, Route } from "react-router-dom";
+import {Switch, Route, useHistory, useLocation} from "react-router-dom";
 
 const HomePage = React.lazy(() => import("homepage/HomePage"));
 const DetailsPage = React.lazy(() => import("detailspage/DetailsPage"));
 const SeatSelectionPage = React.lazy(() => import("seatselection/SeatSelection"));
 
 const App = () => {
-  return (
-    <Switch>
-      <Route path="/details">
-          <Suspense fallback='Loading...'>
-              <DetailsPage></DetailsPage>
-          </Suspense>
-      </Route>
-      <Route path="/book">
-          <Suspense fallback='Loading...'>
-              <SeatSelectionPage></SeatSelectionPage>
-          </Suspense>
-      </Route>
-      <Route path="/">
-          <Suspense fallback='Loading...'>
-            <HomePage></HomePage>
-          </Suspense>
-      </Route>
-    </Switch>
-  );
+    const history = useHistory();
+    const location = useLocation();
+
+    const movieClicked = (movie) => {
+        history.push("details/" + movie.id);
+    }
+
+    return (
+        <Switch>
+            <Route path="/details/:id">
+                <Suspense fallback='Loading...'>
+                    <DetailsPage location={location}></DetailsPage>
+                </Suspense>
+            </Route>
+            <Route path="/book">
+                <Suspense fallback='Loading...'>
+                    <SeatSelectionPage></SeatSelectionPage>
+                </Suspense>
+            </Route>
+            <Route path="/">
+                <Suspense fallback='Loading...'>
+                    <HomePage movieClicked={movieClicked}></HomePage>
+                </Suspense>
+            </Route>
+        </Switch>
+    );
 };
 
 export default App;

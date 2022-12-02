@@ -25,6 +25,9 @@ module.exports = {
       exposes: {
         "./DetailsPage": "./src/components/DetailsContent/DetailsContent.jsx"
       },
+      remotes: {
+        movieapp: "movieapp@http://localhost:9000/remoteEntry.js"
+      },
       shared: ["react", "react-dom"]
     }),
     new MiniCssExtractPlugin(),

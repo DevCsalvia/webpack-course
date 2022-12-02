@@ -24,6 +24,9 @@ module.exports = {
       exposes: {
         "./SeatSelection": "./src/components/SeatSelectionContent/SeatSelectionContent.jsx"
       },
+      remotes: {
+        movieapp: "movieapp@http://localhost:9000/remoteEntry.js"
+      },
       shared: ["react", "react-dom"]
     }),
     new MiniCssExtractPlugin(),
